@@ -10,6 +10,9 @@ const gameboard = (() =>{
         let item = document.createElement("div")
         item.setAttribute('class', 'selection')
         item.innerHTML = element
+        item.addEventListener('click', function() {
+            console.log("clicked")
+        })
         board.append(item)
 
 
