@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.title{
+    text-align: center;
+}
+.board{
+    margin: auto;
+    background-color: black;
+    width: 80vw;
+    height: 80vh;
+    border: 5px solid black;
+    display: grid;
+    grid-template: repeat(3, 1fr)/ repeat(3, 1fr);
+    gap: 5px;
+}
+.selection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    background-color: rebeccapurple;
+    color: aliceblue;
+}
