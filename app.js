@@ -37,19 +37,23 @@ const gameboard = (() =>{
             item.setAttribute('id', i)
             item.addEventListener('click', function() {
                 // check to see if that spot is already taken and if it is the players turn
+                game.playerPicker()
                 if(player1.isPlayerTurn && item.innerHTML === "") {
-                    console.log(player1.isPlayerTurn)
+                    
                     item.innerHTML = player1.mark
                     player1.isPlayerTurn = false
                     player2.isPlayerTurn = true
+                    game.playerPicker()
+
                     
                 }
                 else if(player2.isPlayerTurn && item.innerHTML === "") {
-                    console.log(player2.isPlayerTurn)
-
+                    
                     item.innerHTML = player2.mark
                     player2.isPlayerTurn = false
                     player1.isPlayerTurn = true
+                    game.playerPicker()
+
                     
                 }
 
@@ -71,29 +75,33 @@ gameboard.displayBoard()
 
 
 // any logic related to the flow of the game
-// const game = (()=>{
-//     // one btn is red when its their turn. one is blue. otherwise black
-//     const p1btn = document.querySelector(".p1btn")
-//     const p2btn = document.querySelector(".p2btn")
+const game = (()=>{
+    // one btn is red when its their turn. one is blue. otherwise black
+    const p1btn = document.querySelector(".p1btn")
+    p1btn.classList.add("p1curr")
+    const p2btn = document.querySelector(".p2btn")
+
+    console.log(player1.isPlayerTurn)
+    console.log(player2.isPlayerTurn)
     
-//     const playerPicker = () => {
-//         if(player1.isPlayerTurn === true){
-//             p1btn.classList.add("p1curr")
-//         }
-//         else {
-//             p1btn.classList.remove("p1curr")
-//         }
+    const playerPicker = () => {
+        if(player1.isPlayerTurn === true){
+            p1btn.classList.add("p1curr")
+        }
+        else {
+            p1btn.classList.remove("p1curr")
+        }
 
-//         if(player2.isPlayerTurn === true){
-//             p2btn.classList.add("p2curr")
-//         }
-//         else{
-//             p2btn.classList.remove("p2curr")
-//         }
-//     }
+        if(player2.isPlayerTurn === true){
+            p2btn.classList.add("p2curr")
+        }
+        else{
+            p2btn.classList.remove("p2curr")
+        }
+    }
 
-//     return {playerPicker}
+    return {playerPicker}
 
 
-// })()
+})()
 
