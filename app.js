@@ -21,7 +21,7 @@ player1.isPlayerTurn = true
 const player2 = Player("player2")
 player2.mark = "O"
 
-
+// console.log(player1.isPlayerTurn)
 
 // any logic related to the board or position of selections
 const gameboard = (() =>{
@@ -36,15 +36,21 @@ const gameboard = (() =>{
             item.setAttribute('class', 'selection')
             item.setAttribute('id', i)
             item.addEventListener('click', function() {
-                if(player1.isPlayerTurn) {
+                // check to see if that spot is already taken and if it is the players turn
+                if(player1.isPlayerTurn && item.innerHTML === "") {
+                    console.log(player1.isPlayerTurn)
                     item.innerHTML = player1.mark
                     player1.isPlayerTurn = false
                     player2.isPlayerTurn = true
+                    
                 }
-                else if(player2.isPlayerTurn) {
+                else if(player2.isPlayerTurn && item.innerHTML === "") {
+                    console.log(player2.isPlayerTurn)
+
                     item.innerHTML = player2.mark
                     player2.isPlayerTurn = false
                     player1.isPlayerTurn = true
+                    
                 }
 
             })
@@ -66,6 +72,28 @@ gameboard.displayBoard()
 
 // any logic related to the flow of the game
 // const game = (()=>{
+//     // one btn is red when its their turn. one is blue. otherwise black
+//     const p1btn = document.querySelector(".p1btn")
+//     const p2btn = document.querySelector(".p2btn")
+    
+//     const playerPicker = () => {
+//         if(player1.isPlayerTurn === true){
+//             p1btn.classList.add("p1curr")
+//         }
+//         else {
+//             p1btn.classList.remove("p1curr")
+//         }
+
+//         if(player2.isPlayerTurn === true){
+//             p2btn.classList.add("p2curr")
+//         }
+//         else{
+//             p2btn.classList.remove("p2curr")
+//         }
+//     }
+
+//     return {playerPicker}
+
 
 // })()
 
