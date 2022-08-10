@@ -13,20 +13,28 @@ const Player = (name) => {
 
 
 }
-
+const title = document.querySelector(".title")
 const player1 = Player("player1")
 player1.mark = "X"
+// player1.mark.style.color = "red"
 player1.isPlayerTurn = true
+let p1Score = 0
 
 const player2 = Player("player2")
 player2.mark = "O"
+let p2Score = 0
+let board = document.querySelector('.board')
+let selection = ["","","","","","","","",""]
 
-// console.log(player1.isPlayerTurn)
+let win
+
+let p1scoreBoard = document.getElementById("p1Score")
+let p2scoreBoard = document.getElementById("p2Score")
+
+
 
 // any logic related to the board or position of selections
 const gameboard = (() =>{
-    const board = document.querySelector('.board')
-    const selection = ["","","","","","","","","",]
     
     // loop through the game selection array and for each item, create a div with an inner html correpsonding to the value. give each item a class of selection append that div to the board
     const displayBoard = function() {
@@ -39,22 +47,42 @@ const gameboard = (() =>{
                 // check to see if that spot is already taken and if it is the players turn
                 game.playerPicker()
                 if(player1.isPlayerTurn && item.innerHTML === "") {
-                    
+                    selection[item.id] = player1.mark
                     item.innerHTML = player1.mark
+                    win = game.checkWin()
+                    
+                    if(win !== null && win !== "TIE") {
+                        title.innerHTML = "Player 1 Wins"
+                        p1Score++
+                        p1scoreBoard.innerHTML = p1Score
+                        game.gameOver()
+                    }
+                    else if(win ==="TIE"){
+                        title.innerHTML = win
+                        game.gameOver()
+                    }
                     player1.isPlayerTurn = false
                     player2.isPlayerTurn = true
                     game.playerPicker()
-
-                    
                 }
                 else if(player2.isPlayerTurn && item.innerHTML === "") {
-                    
+                    selection[item.id] = player2.mark
                     item.innerHTML = player2.mark
+                    win = game.checkWin()
+                    if(win !== null && win !== "TIE") {
+                        title.innerHTML = "Player 2 Wins"
+                        p2Score++
+                        p2scoreBoard.innerHTML = p2Score
+                        game.gameOver()
+                    }
+                    else if(win ==="TIE"){
+                        title.innerHTML = win
+                        game.gameOver()
+
+                    }
                     player2.isPlayerTurn = false
                     player1.isPlayerTurn = true
-                    game.playerPicker()
-
-                    
+                    game.playerPicker()  
                 }
 
             })
@@ -81,8 +109,8 @@ const game = (()=>{
     p1btn.classList.add("p1curr")
     const p2btn = document.querySelector(".p2btn")
 
-    console.log(player1.isPlayerTurn)
-    console.log(player2.isPlayerTurn)
+    // console.log(player1.isPlayerTurn)
+    // console.log(player2.isPlayerTurn)
     
     const playerPicker = () => {
         if(player1.isPlayerTurn === true){
@@ -91,16 +119,63 @@ const game = (()=>{
         else {
             p1btn.classList.remove("p1curr")
         }
-
+        
         if(player2.isPlayerTurn === true){
             p2btn.classList.add("p2curr")
         }
         else{
             p2btn.classList.remove("p2curr")
         }
-    }
+    };
+    
+    
 
-    return {playerPicker}
+    const checkWin = () => {
+        const winConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+
+        let winner = null; 
+
+        winConditions.forEach(function(combo, index){
+            if(selection[combo[0]] && selection[combo[0]] === selection[combo[1]] && selection[combo[2]] === selection[combo[0]]) {
+                winner = selection[combo[0]];
+            }
+        });
+
+        if(winner) {
+            return winner
+        }
+        else if (selection.includes("")) {
+            return null
+        }
+        else {
+            return "TIE"
+        }
+    };
+    
+    const gameOver = () => {
+        alert("GAME OVER")
+        const GOmessage = document.querySelector(".card")
+        GOmessage.setAttribute("display", "flex")
+        selection = ["","","","","","","","",""]
+        let squares = document.querySelectorAll(".selection")
+        squares.forEach(square => {
+            square.innerHTML =""
+        })
+        title.innerHTML = "TIC TAC TOE"
+        player1.isPlayerTurn = true
+        player2.isPlayerTurn = false
+    }
+        
+    return {playerPicker, checkWin, gameOver}
 
 
 })()
