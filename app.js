@@ -30,6 +30,7 @@ let win
 
 let p1scoreBoard = document.getElementById("p1Score")
 let p2scoreBoard = document.getElementById("p2Score")
+const gameOverBTN = document.querySelector(".gameOver-btn")
 
 
 
@@ -52,13 +53,13 @@ const gameboard = (() =>{
                     win = game.checkWin()
                     
                     if(win !== null && win !== "TIE") {
-                        title.innerHTML = "Player 1 Wins"
+                        // title.innerHTML = "Player 1 Wins"
                         p1Score++
                         p1scoreBoard.innerHTML = p1Score
                         game.gameOver()
                     }
                     else if(win ==="TIE"){
-                        title.innerHTML = win
+                        // title.innerHTML = win
                         game.gameOver()
                     }
                     player1.isPlayerTurn = false
@@ -70,13 +71,13 @@ const gameboard = (() =>{
                     item.innerHTML = player2.mark
                     win = game.checkWin()
                     if(win !== null && win !== "TIE") {
-                        title.innerHTML = "Player 2 Wins"
+                        // title.innerHTML = "Player 2 Wins"
                         p2Score++
                         p2scoreBoard.innerHTML = p2Score
                         game.gameOver()
                     }
                     else if(win ==="TIE"){
-                        title.innerHTML = win
+                        // title.innerHTML = win
                         game.gameOver()
 
                     }
@@ -162,14 +163,41 @@ const game = (()=>{
     };
     
     const gameOver = () => {
-        alert("GAME OVER")
+        // alert("GAME OVER")
+        console.log(win);
         const GOmessage = document.querySelector(".card")
-        GOmessage.setAttribute("display", "flex")
+        GOmessage.style.display = "flex"
+        if(win === "X"){
+            console.log("X wins");
+            GOmessage.textContent = `GAME OVER. Player 1 Won!`
+
+        }
+        if(win === "O"){
+            console.log("X wins");
+            GOmessage.textContent = `GAME OVER. Player 2 Won!`
+
+        }
+        if(win === "TIE"){
+            console.log("X wins");
+            GOmessage.textContent = `GAME OVER. TIE`
+
+        }
+        // GOmessage.textContent = `GAME OVER. The ${win}'s Won!`
+        const GObtn = document.createElement("button")
+        GObtn.textContent = "OK"
+        GObtn.addEventListener("click", function(){
+            GOmessage.style.display = "none"
+        })
+        GOmessage.appendChild(GObtn)
         selection = ["","","","","","","","",""]
         let squares = document.querySelectorAll(".selection")
         squares.forEach(square => {
-            square.innerHTML =""
+            square.innerHTML = ""
         })
+        gameOverBTN.addEventListener("click", function() {
+            GOmessage.style.display = "none"
+        })
+        
         title.innerHTML = "TIC TAC TOE"
         player1.isPlayerTurn = true
         player2.isPlayerTurn = false
