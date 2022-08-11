@@ -22,6 +22,7 @@ let p1Score = 0
 
 const player2 = Player("player2")
 player2.mark = "O"
+
 let p2Score = 0
 let board = document.querySelector('.board')
 let selection = ["","","","","","","","",""]
@@ -50,6 +51,7 @@ const gameboard = (() =>{
                 if(player1.isPlayerTurn && item.innerHTML === "") {
                     selection[item.id] = player1.mark
                     item.innerHTML = player1.mark
+                    item.style.color = "red"
                     win = game.checkWin()
                     
                     if(win !== null && win !== "TIE") {
@@ -69,6 +71,8 @@ const gameboard = (() =>{
                 else if(player2.isPlayerTurn && item.innerHTML === "") {
                     selection[item.id] = player2.mark
                     item.innerHTML = player2.mark
+                    item.style.color = "blue"
+
                     win = game.checkWin()
                     if(win !== null && win !== "TIE") {
                         // title.innerHTML = "Player 2 Wins"
