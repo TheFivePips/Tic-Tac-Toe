@@ -167,8 +167,7 @@ const game = (()=>{
     };
     
     const gameOver = () => {
-        // alert("GAME OVER")
-        console.log(win);
+        
         const GOmessage = document.querySelector(".card")
         GOmessage.style.display = "flex"
         if(win === "X"){
@@ -186,13 +185,7 @@ const game = (()=>{
             GOmessage.textContent = `GAME OVER. TIE`
 
         }
-        // GOmessage.textContent = `GAME OVER. The ${win}'s Won!`
-        const GObtn = document.createElement("button")
-        GObtn.textContent = "OK"
-        GObtn.addEventListener("click", function(){
-            GOmessage.style.display = "none"
-        })
-        GOmessage.appendChild(GObtn)
+       
         selection = ["","","","","","","","",""]
         let squares = document.querySelectorAll(".selection")
         squares.forEach(square => {
@@ -201,6 +194,12 @@ const game = (()=>{
         gameOverBTN.addEventListener("click", function() {
             GOmessage.style.display = "none"
         })
+        const GObtn = document.createElement("button")
+        GObtn.textContent = "OK"
+        GObtn.addEventListener("click", function(){
+            GOmessage.style.display = "none"
+        })
+        GOmessage.appendChild(GObtn)
         
         title.innerHTML = "TIC TAC TOE"
         player1.isPlayerTurn = true
