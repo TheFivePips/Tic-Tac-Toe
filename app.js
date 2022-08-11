@@ -35,6 +35,7 @@ const gameOverBTN = document.querySelector(".gameOver-btn")
 
 
 
+
 // any logic related to the board or position of selections
 const gameboard = (() =>{
     
@@ -185,12 +186,12 @@ const game = (()=>{
             GOmessage.textContent = `GAME OVER. TIE`
 
         }
-       
-        selection = ["","","","","","","","",""]
-        let squares = document.querySelectorAll(".selection")
-        squares.forEach(square => {
-            square.innerHTML = ""
-        })
+        reset()
+        // selection = ["","","","","","","","",""]
+        // let squares = document.querySelectorAll(".selection")
+        // squares.forEach(square => {
+        //     square.innerHTML = ""
+        // })
         gameOverBTN.addEventListener("click", function() {
             GOmessage.style.display = "none"
         })
@@ -205,9 +206,23 @@ const game = (()=>{
         player1.isPlayerTurn = true
         player2.isPlayerTurn = false
     }
-        
-    return {playerPicker, checkWin, gameOver}
+    
+    const reset = () => {
+        selection = ["","","","","","","","",""]
+        let squares = document.querySelectorAll(".selection")
+        squares.forEach(square => {
+            square.innerHTML = ""
+        })
+        player1.isPlayerTurn = true
+        player2.isPlayerTurn = false
+        playerPicker()
+    }
+
+    const resetBtn = document.getElementById("reset-btn")
+    
+    resetBtn.addEventListener("click", reset)
+
+    return {playerPicker, checkWin, gameOver, reset}
 
 
 })()
-

@@ -68,7 +68,7 @@
     height: 80vh;
     background-color: gray;
     border: 1px solid black;
-    left: 124px;
+    left: 118px;
     top: 83px;
     color: white;
     justify-content: center;
@@ -86,4 +86,13 @@
     background-color: white;
     margin: 15px;
     
+}
+
+#reset-btn{
+    color: black;
+    background-color: whitesmoke;
+    position: relative;
+    left: 47.5vw;
+    margin: 10px;
+
 }
