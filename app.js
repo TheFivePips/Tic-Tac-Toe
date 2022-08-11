@@ -1,31 +1,25 @@
-// any logic related to players
-// use this to add an extra player later on
+
+// Player factory function
 const Player = (name) => {
 
     let score = 0 
     let isPlayerTurn = false
 
-    // const swapTurn = function(isPlayerTurn){
-    //     return !isPlayerTurn
-    // }
-
     return { name, score, isPlayerTurn } 
 
-
 }
-const title = document.querySelector(".title")
-const player1 = Player("player1")
-player1.mark = "X"
-// player1.mark.style.color = "red"
-player1.isPlayerTurn = true
-let p1Score = 0
+// **********************************************************************************************************************************************************************
 
+// These should be in a function somewhere to cleanup the global namespace but  a lot of refactoring needs to be done to make it work.
+const player1 = Player("player1")
 const player2 = Player("player2")
+player1.mark = "X"
 player2.mark = "O"
 
+player1.isPlayerTurn = true
+
+let p1Score = 0
 let p2Score = 0
-let board = document.querySelector('.board')
-let selection = ["","","","","","","","",""]
 
 let win
 
@@ -34,12 +28,13 @@ let p2scoreBoard = document.getElementById("p2Score")
 const gameOverBTN = document.querySelector(".gameOver-btn")
 
 
+let board = document.querySelector('.board')
+let selection = ["","","","","","","","",""]
 
-
-// any logic related to the board or position of selections
+// **********************************************************************************************************************************************************************
 const gameboard = (() =>{
-    
-    // loop through the game selection array and for each item, create a div with an inner html correpsonding to the value. give each item a class of selection append that div to the board
+
+
     const displayBoard = function() {
        
         for(let i=0; i <selection.length; i++) {
@@ -56,13 +51,11 @@ const gameboard = (() =>{
                     win = game.checkWin()
                     
                     if(win !== null && win !== "TIE") {
-                        // title.innerHTML = "Player 1 Wins"
                         p1Score++
                         p1scoreBoard.innerHTML = p1Score
                         game.gameOver()
                     }
                     else if(win ==="TIE"){
-                        // title.innerHTML = win
                         game.gameOver()
                     }
                     player1.isPlayerTurn = false
@@ -73,16 +66,14 @@ const gameboard = (() =>{
                     selection[item.id] = player2.mark
                     item.innerHTML = player2.mark
                     item.style.color = "blue"
-
                     win = game.checkWin()
+
                     if(win !== null && win !== "TIE") {
-                        // title.innerHTML = "Player 2 Wins"
                         p2Score++
                         p2scoreBoard.innerHTML = p2Score
                         game.gameOver()
                     }
                     else if(win ==="TIE"){
-                        // title.innerHTML = win
                         game.gameOver()
 
                     }
@@ -94,12 +85,9 @@ const gameboard = (() =>{
             })
              board.append(item)
             }
-            
-            
-            
+          
     }
-    
-
+   
     return {displayBoard}
 
 
@@ -107,17 +95,15 @@ const gameboard = (() =>{
 
 gameboard.displayBoard()
 
+// **********************************************************************************************************************************************************************
 
-// any logic related to the flow of the game
+//logic related to the flow of the game
 const game = (()=>{
-    // one btn is red when its their turn. one is blue. otherwise black
+    
     const p1btn = document.querySelector(".p1btn")
     p1btn.classList.add("p1curr")
     const p2btn = document.querySelector(".p2btn")
 
-    // console.log(player1.isPlayerTurn)
-    // console.log(player2.isPlayerTurn)
-    
     const playerPicker = () => {
         if(player1.isPlayerTurn === true){
             p1btn.classList.add("p1curr")
@@ -133,9 +119,7 @@ const game = (()=>{
             p2btn.classList.remove("p2curr")
         }
     };
-    
-    
-
+  
     const checkWin = () => {
         const winConditions = [
             [0, 1, 2],
@@ -172,26 +156,15 @@ const game = (()=>{
         const GOmessage = document.querySelector(".card")
         GOmessage.style.display = "flex"
         if(win === "X"){
-            console.log("X wins");
             GOmessage.textContent = `GAME OVER. Player 1 Won!`
-
         }
         if(win === "O"){
-            console.log("X wins");
             GOmessage.textContent = `GAME OVER. Player 2 Won!`
-
         }
         if(win === "TIE"){
-            console.log("X wins");
             GOmessage.textContent = `GAME OVER. TIE`
-
         }
         reset()
-        // selection = ["","","","","","","","",""]
-        // let squares = document.querySelectorAll(".selection")
-        // squares.forEach(square => {
-        //     square.innerHTML = ""
-        // })
         gameOverBTN.addEventListener("click", function() {
             GOmessage.style.display = "none"
         })
@@ -202,7 +175,7 @@ const game = (()=>{
         })
         GOmessage.appendChild(GObtn)
         
-        title.innerHTML = "TIC TAC TOE"
+        
         player1.isPlayerTurn = true
         player2.isPlayerTurn = false
     }
@@ -217,10 +190,9 @@ const game = (()=>{
         player2.isPlayerTurn = false
         playerPicker()
     }
-
     const resetBtn = document.getElementById("reset-btn")
-    
     resetBtn.addEventListener("click", reset)
+
 
     return {playerPicker, checkWin, gameOver, reset}
 
